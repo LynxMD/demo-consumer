@@ -1,6 +1,7 @@
-from flask import Flask
-import requests
 import json
+
+import requests
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -10,6 +11,7 @@ def hello_world():
 
 @app.route('/health')
 def health():
-    config = json.load('./config.json')
-    r = requests.get(config["server"])
+    with open("./config.json") as config_file:
+        config = json.load(config_file)
+    requests.get(config["server"])
     return "OK"
